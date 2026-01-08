@@ -1,25 +1,98 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SnsIcons() {
   return (
     <div className="flex gap-4">
       <Link
+        href="https://github.com/takahiro-okada"
+        target="_blank"
+        className="text-gray-600 hover:text-gray-800"
+        aria-label="Github Icon"
+      >
+        <Image
+          src="/images/icon-github.svg"
+          alt="Github Icon"
+          width={30}
+          height={30}
+        />
+      </Link>
+      <Link
+        href="https://www.linkedin.com/in/takahiro-okada-76b998287/"
+        target="_blank"
+        className="text-gray-600 hover:text-gray-800"
+        aria-label="LinkedIn Icon"
+      >
+        <Image
+          src="/images/icon-linkedin.svg"
+          alt="LinkedIn Icon"
+          width={30}
+          height={30}
+        />
+      </Link>
+      <Link
+        href="https://dev.to/dev-oka"
+        target="_blank"
+        className="text-gray-600 hover:text-gray-800"
+        aria-label="dev.to Icon"
+      >
+        <Image
+          src="/images/icon-dev.svg"
+          alt="dev.to Icon"
+          width={30}
+          height={30}
+        />
+      </Link>
+      <Link
+        href="https://www.youtube.com/@dev-oka"
+        target="_blank"
+        className="text-gray-600 hover:text-gray-800"
+        aria-label="YouTube Icon"
+      >
+        <Image
+          src="/images/icon-youtube.svg"
+          alt="YouTube Icon"
+          width={30}
+          height={30}
+        />
+      </Link>
+      <Link
         href="#"
+        className="text-gray-600 hover:text-gray-800"
+        aria-label="Instagram Icon"
+      >
+        <Image
+          src="/images/icon-instagram.svg"
+          alt="Instagram Icon"
+          width={30}
+          height={30}
+        />
+      </Link>
+      <Link
+        href="https://www.facebook.com/oka.jumboworld/"
+        target="_blank"
+        className="text-gray-600 hover:text-gray-800"
+        aria-label="Facebook Icon"
+      >
+        <Image
+          src="/images/icon-facebook.svg"
+          alt="Facebook Icon"
+          width={30}
+          height={30}
+        />
+      </Link>
+      <Link
+        href="https://x.com/oka_jumboworld"
+        target="_blank"
         className="text-gray-600 hover:text-gray-800"
         aria-label="X (Twitter) Icon"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
-          <path
-            d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 001.88-2.37 8.59 8.59 0 01-2.72 1.04 4.28 4.28 0 00-7.3 3.9A12.14 12.14 0 013 4.8a4.28 4.28 0 001.32 5.72 4.24 4.24
-            0 01-1.94-.54v.05a4.28 4.28 0 003.44 4.2 4.3 4.3 0 01-1.93.07 4.28 4.28 0 004 2.97A8.6 8.6 0 012 19.54a12.14 12.14 0 006.56 1.92c7.88 0 12.2-6.53 12.2-12.2l-.01-.56A8.72 8.72 0 0024 5.1a8.5 8.5 0 01-2.54.7z"
-          />w
-        </svg>
+        <Image
+          src="/images/icon-x.svg"
+          alt="X (Twitter) Icon"
+          width={30}
+          height={30}
+        />
       </Link>
     </div>
   );

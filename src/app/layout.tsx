@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Just_Me_Again_Down_Here } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/layouts/Header";
+import Footer from "@/components/layouts/Footer";
 
 // English font
 const justMeAgainDownHere = Just_Me_Again_Down_Here({
@@ -21,7 +23,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${justMeAgainDownHere.variable} antialiased`}>{children}</body>
+      <body className={`${justMeAgainDownHere.variable} antialiased`}>
+        <Header />
+
+        {children}
+
+        <Footer />
+        
+        </body>
     </html>
   );
 }
