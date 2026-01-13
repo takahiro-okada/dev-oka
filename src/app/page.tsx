@@ -1,11 +1,9 @@
 import Image from "next/image";
-import Header from "@/components/layouts/Header";
 import SnsIcons from "@/components/ui/SnsIcons";
 import WorkCard from "@/components/ui/WorkCard";
 import SectionTitle from "@/components/ui/SectionTitle";
 import NoteCard from "@/components/ui/NoteCard";
 import LinkButton from "@/components/ui/LinkButton";
-import ActivityLog from "@/components/ui/ActivityLog";
 
 export default function Home() {
   return (
@@ -44,15 +42,6 @@ export default function Home() {
                 love traveling.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-16">
-        <div className="max-w-(--content-width) mx-auto px-5">
-          <SectionTitle>My Activity</SectionTitle>
-          <div className="mt-8">
-          <ActivityLog username="takahiro-okada" />
           </div>
         </div>
       </section>

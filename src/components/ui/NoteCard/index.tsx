@@ -3,7 +3,7 @@ import Link from "next/link";
 
 type NoteCardProps = {
   href: string;
-  imageSrc: string;
+  imageSrc?: string;
   alt: string;
   title: string;
   date?: string;
@@ -13,13 +13,17 @@ export default function NoteCard({ href, imageSrc, alt, title, date }: NoteCardP
   return (
     <li>
       <Link href={href} className="flex items-center md:gap-8 gap-6 py-2 rounded-lg">
-        <Image
-          src={imageSrc}
-          alt={alt}
-          width={100}
-          height={100}
-          className="w-rounded-lg bg-[#ecf3f6] object-cover rounded-3xl aspect-square"
-        />
+        {imageSrc ? (
+          <Image
+            src={imageSrc}
+            alt={alt}
+            width={100}
+            height={100}
+            className="w-rounded-lg bg-[#ecf3f6] object-cover rounded-3xl aspect-square"
+          />
+        ) : (
+          <div className="w-[100px] h-[100px] bg-[#ecf3f6] rounded-3xl" />
+        )}
         <div>
           <h3 className="text-lg font-bold">{title}</h3>
           {date && <time className="text-sm text-gray-500">{date}</time>}
