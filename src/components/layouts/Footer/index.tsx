@@ -7,22 +7,22 @@ export default function Footer() {
         <nav>
           <ul className="flex justify-center gap-4">
             <li>
-              <Link href="#" className="text-sm">
+              <Link href="/" className="text-sm">
                 Home
               </Link>
             </li>
             <li>
-              <Link href="#" className="text-sm">
+              <Link href="/works/" className="text-sm">
                 Works
               </Link>
             </li>
             <li>
-              <Link href="#" className="text-sm">
+              <Link href="/notes/" className="text-sm">
                 Notes
               </Link>
             </li>
             <li>
-              <Link href="#" className="text-sm">
+              <Link href="/privacy/" className="text-sm">
                 Privacy
               </Link>
             </li>

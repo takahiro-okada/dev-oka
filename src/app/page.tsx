@@ -5,6 +5,7 @@ import WorkCard from "@/components/ui/WorkCard";
 import SectionTitle from "@/components/ui/SectionTitle";
 import NoteCard from "@/components/ui/NoteCard";
 import LinkButton from "@/components/ui/LinkButton";
+import ActivityLog from "@/components/ui/ActivityLog";
 
 export default function Home() {
   return (
@@ -50,8 +51,9 @@ export default function Home() {
       <section className="mt-16">
         <div className="max-w-(--content-width) mx-auto px-5">
           <SectionTitle>My Activity</SectionTitle>
-
-          <p className="mt-4">Coming soon...</p>
+          <div className="mt-8">
+          <ActivityLog username="takahiro-okada" />
+          </div>
         </div>
       </section>
 
