@@ -1,0 +1,50 @@
+{
+  "gitmoji.addCustomEmoji": [
+    {
+      "emoji": "🐛",
+      "code": ":bug:",
+      "description": "バグ修正・誤字脱字修正"
+    },
+    {
+      "emoji": "✏️",
+      "code": ":pencil2:",
+      "description": "微修正"
+    },
+    {
+      "emoji": "✨",
+      "code": ":sparkles:",
+      "description": "新機能・新ファイル追加"
+    },
+    {
+      "emoji": "🎉",
+      "code": ":tada:",
+      "description": "新プロジェクト立ち上げ"
+    },
+    {
+      "emoji": "⚡️",
+      "code": ":zap:",
+      "description": "改良・高速化"
+    },
+    {
+      "emoji": "♻️",
+      "code": ":recycle:",
+      "description": "コード整形"
+    },
+    {
+      "emoji": "💩",
+      "code": ":poor:",
+      "description": "非推奨追加"
+    },
+    {
+      "emoji": "🗑️",
+      "code": ":wastebasket:",
+      "description": "削除"
+    }
+  ],
+  "gitmoji.onlyUseCustomEmoji": true,
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "file": ".github/commit-instructions.md"
+    }
+  ]
+}
