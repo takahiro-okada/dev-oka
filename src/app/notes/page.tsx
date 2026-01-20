@@ -7,8 +7,6 @@ export default async function NotesPage() {
 
   return (
     <div className="max-w-(--content-width) mx-auto px-5">
-      <SectionTitle>My Notes</SectionTitle>
-
       <ul className="grid gap-2.5 mt-8">
         {noteList.contents.map((note) => (
           <NoteCard

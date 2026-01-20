@@ -4,8 +4,13 @@ import WorkCard from "@/components/ui/WorkCard";
 import SectionTitle from "@/components/ui/SectionTitle";
 import NoteCard from "@/components/ui/NoteCard";
 import LinkButton from "@/components/ui/LinkButton";
+import { getLatestNotes, getLatestWorks } from "@/lib/microcms";
+import { formatDate } from "@/utils/formatDate";
 
-export default function Home() {
+export default async function Home() {
+  const notes = await getLatestNotes();
+  const works = await getLatestWorks();
+
   return (
     <>
       <section>
@@ -53,21 +58,14 @@ export default function Home() {
         </div>
         <div className="max-w-(--content-width) mx-auto px-5">
           <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {Array.from({ length: 3 }).map((_, index) => (
+            {works.map((work) => (
               <WorkCard
-                key={index}
-                imageSrc="/images/sample.jpg"
-                alt={`Work ${index + 1}`}
-                title={"Work Title 1Work Title 1Work Title 1Work Title 1"}
-                tag="#personal"
-                techs={[
-                  "Next.js",
-                  "TypeScript",
-                  "Tailwind",
-                  "Tailwind",
-                  "Tailwind",
-                ]}
-                href="#"
+                key={work.id}
+                href={`/works/${work.id}`}
+                imageSrc={work.thumbnail?.url || "/images/default.jpeg"}
+                alt={work.title}
+                title={work.title}
+                tag={work.category}
               />
             ))}
           </ul>
@@ -84,36 +82,16 @@ export default function Home() {
           <SectionTitle>My Notes</SectionTitle>
 
           <ul className="grid gap-2.5 mt-8">
-            <NoteCard
-              href="/"
-              imageSrc="/images/sample1.jpeg"
-              alt="Note Thumbnail"
-              title={
-                "Note Title　Note Title　Note Title　Note Title　Note Title　Note Title　Note Title　Note Title"
-              }
-              date="2024-01-01"
-            />
-            <NoteCard
-              href="/"
-              imageSrc="/images/sample2.png"
-              alt="Note Thumbnail"
-              title="Note Title"
-              date="2024-01-01"
-            />
-            <NoteCard
-              href="/"
-              imageSrc="/images/sample3.JPG"
-              alt="Note Thumbnail"
-              title="Note Title"
-              date="2024-01-01"
-            />
-            <NoteCard
-              href="/"
-              imageSrc="/images/sample4.jpeg"
-              alt="Note Thumbnail"
-              title="Note Title"
-              date="2024-01-01"
-            />
+            {notes.map((note) => (
+              <NoteCard
+                key={note.id}
+                href={`/notes/${note.id}`}
+                imageSrc={note.thumbnail?.url || "/images/default.jpeg"}
+                alt={note.title}
+                title={note.title}
+                date={formatDate(note.publishedAt)}
+              />
+            ))}
           </ul>
 
           <div className="mt-12 text-center">

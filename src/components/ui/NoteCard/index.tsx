@@ -1,3 +1,4 @@
+import { formatDate } from "@/utils/formatDate";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -26,7 +27,7 @@ export default function NoteCard({ href, imageSrc, alt, title, date }: NoteCardP
         )}
         <div>
           <h3 className="text-lg font-bold">{title}</h3>
-          {date && <time className="text-sm text-gray-500">{date}</time>}
+          {date && <time className="text-sm text-gray-500">{formatDate(date)}</time>}
         </div>
       </Link>
     </li>
