@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { createPageMetadata } from "@/utils/createMetadata";
 import SnsIcons from "@/components/ui/SnsIcons";
 import WorkCard from "@/components/ui/WorkCard";
 import SectionTitle from "@/components/ui/SectionTitle";
@@ -6,6 +7,8 @@ import NoteCard from "@/components/ui/NoteCard";
 import LinkButton from "@/components/ui/LinkButton";
 import { getLatestNotes, getLatestWorks } from "@/lib/microcms";
 import { formatDate } from "@/utils/formatDate";
+
+export const metadata = createPageMetadata("home");
 
 export default async function Home() {
   const notes = await getLatestNotes();
@@ -65,13 +68,13 @@ export default async function Home() {
                 imageSrc={work.thumbnail?.url || "/images/default.jpeg"}
                 alt={work.title}
                 title={work.title}
-                tag={work.category}
+                techs={work.techs}
               />
             ))}
           </ul>
 
           <div className="mt-12 text-center">
-            <LinkButton href="/works" />
+            <LinkButton href="/works/">READ MORE</LinkButton>
           </div>
         </div>
       </section>
@@ -95,7 +98,7 @@ export default async function Home() {
           </ul>
 
           <div className="mt-12 text-center">
-            <LinkButton href="/notes" />
+            <LinkButton href="/notes">READ MORE</LinkButton>
           </div>
         </div>
       </section>

@@ -10,10 +10,19 @@ type NoteCardProps = {
   date?: string;
 };
 
-export default function NoteCard({ href, imageSrc, alt, title, date }: NoteCardProps) {
+export default function NoteCard({
+  href,
+  imageSrc,
+  alt,
+  title,
+  date,
+}: NoteCardProps) {
   return (
     <li>
-      <Link href={href} className="flex items-center md:gap-8 gap-6 py-2 rounded-lg">
+      <Link
+        href={href}
+        className="flex items-center md:gap-8 gap-6 py-2 rounded-lg"
+      >
         {imageSrc ? (
           <Image
             src={imageSrc}
@@ -27,7 +36,9 @@ export default function NoteCard({ href, imageSrc, alt, title, date }: NoteCardP
         )}
         <div>
           <h3 className="text-lg font-bold">{title}</h3>
-          {date && <time className="text-sm text-gray-500">{formatDate(date)}</time>}
+          {date && (
+            <time className="text-sm text-gray-500">{formatDate(date)}</time>
+          )}
         </div>
       </Link>
     </li>

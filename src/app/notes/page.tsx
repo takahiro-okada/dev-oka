@@ -1,6 +1,9 @@
+import { createPageMetadata } from "@/utils/createMetadata";
 import SectionTitle from "@/components/ui/SectionTitle";
 import NoteCard from "@/components/ui/NoteCard";
 import { getNoteList } from "@/lib/microcms";
+
+export const metadata = createPageMetadata("notes");
 
 export default async function NotesPage() {
   const noteList = await getNoteList();
