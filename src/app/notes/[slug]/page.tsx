@@ -1,3 +1,4 @@
+import { createArticleMetadata } from "@/utils/createMetadata";
 import { getNote } from "@/lib/microcms";
 import { formatDate } from "@/utils/formatDate";
 
@@ -5,6 +6,19 @@ interface NotesPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const note = await getNote(slug);
+
+  return createArticleMetadata(
+    note.title,
+    note.description || note.content?.substring(0, 160),
+    note.thumbnail?.url,
+    note.publishedAt,
+    "article",
+  );
 }
 
 export default async function NotesPage({ params }: NotesPageProps) {

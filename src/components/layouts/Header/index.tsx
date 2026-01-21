@@ -24,7 +24,7 @@ export default function Header() {
           className="px-4 py-2 bg-black rounded-md"
           aria-label="Menu"
         >
-          <span className="text-sm text-white">menu</span>
+          <span className="text-sm text-white font-bold">menu</span>
         </button>
 
         {isOpen && (

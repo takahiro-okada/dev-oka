@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 :root {
-  --color-main-body: rgba(3, 10, 18, .87);
+  --color-main-body: rgba(3, 10, 18, 0.87);
   --color-secondary-body: #798184;
   --background: #ffffff;
   --content-width: 800px;
@@ -14,7 +14,6 @@
   --font-mono: var(--font-geist-mono);
   --font-just-me-again-down-here: var(--font-en);
 
-
   /* Design Tokens */
 }
 
@@ -25,7 +24,6 @@ body {
 }
 
 /* Articel */
-/* Article */
 .article-content {
   @apply text-gray-800 leading-relaxed;
 }
@@ -43,31 +41,35 @@ body {
 }
 
 .article-content p {
-  @apply mb-5 leading-8 text-gray-700;
+  @apply mb-5 leading-8;
 }
 
 .article-content a {
   @apply text-blue-600 hover:text-blue-800 underline decoration-1 underline-offset-2 transition-colors;
 }
 
-.article-content ul {
+.article-content ul,
+.ballon-content ul {
   @apply my-5 ml-6 space-y-3;
 }
 
-.article-content ul li {
-  @apply list-disc text-gray-700 leading-3;
+.article-content ul li,
+.ballon-content ul li {
+  @apply list-disc  leading-6;
 }
 
-.article-content ol {
+.article-content ol,
+.ballon-content ol {
   @apply mb-6 ml-6 space-y-3;
 }
 
-.article-content ol li {
-  @apply list-decimal text-gray-700 leading-7;
+.article-content ol li,
+.ballon-content ol li {
+  @apply list-decimal  leading-7;
 }
 
 .article-content blockquote {
-  @apply border-l-4 border-blue-400 pl-5 py-3 italic text-gray-700 bg-blue-50 my-6 rounded-r;
+  @apply border-l-4 border-blue-400 pl-5 py-3 italic  bg-blue-50 my-6 rounded-r;
 }
 
 .article-content code {
@@ -95,9 +97,13 @@ body {
 }
 
 .article-content td {
-  @apply border border-gray-300 px-4 py-3 text-gray-700;
+  @apply border border-gray-300 px-4 py-3;
 }
 
 .article-content hr {
   @apply border-gray-300 my-8;
+}
+
+.ballon-content p {
+  @apply mt-3.5;
 }

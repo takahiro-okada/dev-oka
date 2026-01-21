@@ -1,5 +1,9 @@
 import { createClient } from "microcms-js-sdk";
-import type { MicroCMSQueries, MicroCMSImage, MicroCMSListContent } from "microcms-js-sdk";
+import type {
+  MicroCMSQueries,
+  MicroCMSImage,
+  MicroCMSListContent,
+} from "microcms-js-sdk";
 
 export type Note = {
   id: string;
@@ -18,13 +22,19 @@ export type Category = {
 
 export type Work = {
   id: string;
-  title: string;
-  url: string;
   publishedAt: string;
-  thumbnail: MicroCMSImage;
   createdAt: string;
-  category: string;
-  content?: string;
+  thumbnail: MicroCMSImage;
+  title: string;
+  url?: string;
+  techs?: string[];
+  github?: string;
+  summary?: string;
+  contents?: Array<{
+    fieldId: string;
+    contentTitle: string;
+    contentDescription: string;
+  }>;
 } & MicroCMSListContent;
 
 if (!process.env.MICROCMS_SERVICE_DOMAIN) {
@@ -65,7 +75,7 @@ export const getLatestNotes = async () => {
     },
   });
   return notes.contents;
-}
+};
 
 export const getWorkList = async (queries?: MicroCMSQueries) => {
   const listData = await client.getList<Work>({
@@ -84,7 +94,7 @@ export const getLatestWorks = async () => {
     },
   });
   return works.contents;
-}
+};
 
 export const getWork = async (slug: string) => {
   const work = await client.getListDetail<Work>({
