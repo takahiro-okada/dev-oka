@@ -48,19 +48,23 @@ body {
   @apply text-blue-600 hover:text-blue-800 underline decoration-1 underline-offset-2 transition-colors;
 }
 
-.article-content ul {
+.article-content ul,
+.ballon-content ul {
   @apply my-5 ml-6 space-y-3;
 }
 
-.article-content ul li {
-  @apply list-disc  leading-3;
+.article-content ul li,
+.ballon-content ul li {
+  @apply list-disc  leading-6;
 }
 
-.article-content ol {
+.article-content ol,
+.ballon-content ol {
   @apply mb-6 ml-6 space-y-3;
 }
 
-.article-content ol li {
+.article-content ol li,
+.ballon-content ol li {
   @apply list-decimal  leading-7;
 }
 

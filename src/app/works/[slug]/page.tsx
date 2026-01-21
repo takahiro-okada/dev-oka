@@ -3,6 +3,7 @@ import { getWork } from "@/lib/microcms";
 import Image from "next/image";
 import LinkButton from "@/components/ui/LinkButton";
 import WorkTag from "@/components/ui/WorkTag";
+import Link from "next/dist/client/link";
 
 interface WorkPageProps {
   params: Promise<{
@@ -31,7 +32,7 @@ export default async function WorkPage({ params }: WorkPageProps) {
     <>
       <article className="max-w-(--content-width) mx-auto px-4">
         {work.thumbnail && (
-          <div className=" w-full">
+          <div className="w-full">
             <Image
               src={work.thumbnail.url}
               alt={work.title}
@@ -47,14 +48,23 @@ export default async function WorkPage({ params }: WorkPageProps) {
             {work.title}
           </h1>
           <div>
-            <div>Link: {work.url}</div>
-            <div>Github: {work.github}</div>
+            {work.url && <div className="font-bold">Link: <Link className="text-[#F16A3B] font-bold" href={work.url}>{work.url}</Link></div>}
+            {work.github && <div className="font-bold">GitHub: <Link className="text-[#F16A3B] font-bold" href={work.github}>{work.github}</Link></div>}
           </div>
         </div>
 
         <div className="mt-4">
           <WorkTag techs={work.techs} />
         </div>
+
+        {work.summary && (
+        <div className="mt-16 relative">
+          <span className="text-5xl absolute left-[20] top-[-30] font-just-me-again-down-here text-[#F16A3B] z-10">Summary</span>
+          <div className="w-full rounded-xl bg-[#ECF3F6] relative p-8 text-base">
+            {work.summary}
+          </div>
+        </div>
+        )}
 
         {work.contents?.map((item, index) => (
           <div key={index} className="mt-12">

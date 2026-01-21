@@ -20,9 +20,9 @@ export default function WorkCard({
 }: Props) {
   return (
     <li className="relative">
-      <span className="absolute right-[-20] top-[-10] text-2xl font-just-me-again-down-here rotate-20 text-[#F16A3B] font-bold">
+      <h2 className="absolute right-[-20] top-[-10] text-2xl font-just-me-again-down-here rotate-20 text-[#F16A3B] font-bold">
         Click Me
-      </span>
+      </h2>
       <Link href={href} className="">
         <div className="">
           <Image
