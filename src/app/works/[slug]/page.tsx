@@ -1,9 +1,10 @@
-import { createArticleMetadata } from "@/utils/createMetadata";
-import { getWork } from "@/lib/microcms";
+import Link from "next/dist/client/link";
 import Image from "next/image";
+
 import LinkButton from "@/components/ui/LinkButton";
 import WorkTag from "@/components/ui/WorkTag";
-import Link from "next/dist/client/link";
+import { getWork } from "@/lib/microcms";
+import { createArticleMetadata } from "@/utils/createMetadata";
 
 interface WorkPageProps {
   params: Promise<{
@@ -11,7 +12,7 @@ interface WorkPageProps {
   }>;
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }: WorkPageProps) {
   const { slug } = await params;
   const work = await getWork(slug);
 
@@ -48,8 +49,22 @@ export default async function WorkPage({ params }: WorkPageProps) {
             {work.title}
           </h1>
           <div>
-            {work.url && <div className="font-bold">Link: <Link className="text-[#F16A3B] font-bold" href={work.url}>{work.url}</Link></div>}
-            {work.github && <div className="font-bold">GitHub: <Link className="text-[#F16A3B] font-bold" href={work.github}>{work.github}</Link></div>}
+            {work.url && (
+              <div className="font-bold">
+                Link:{" "}
+                <Link className="text-[#F16A3B] font-bold" href={work.url}>
+                  {work.url}
+                </Link>
+              </div>
+            )}
+            {work.github && (
+              <div className="font-bold">
+                GitHub:{" "}
+                <Link className="text-[#F16A3B] font-bold" href={work.github}>
+                  {work.github}
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 
@@ -58,12 +73,14 @@ export default async function WorkPage({ params }: WorkPageProps) {
         </div>
 
         {work.summary && (
-        <div className="mt-16 relative">
-          <span className="text-5xl absolute left-[20] top-[-30] font-just-me-again-down-here text-[#F16A3B] z-10">Summary</span>
-          <div className="w-full rounded-xl bg-[#ECF3F6] relative p-8 text-base">
-            {work.summary}
+          <div className="mt-16 relative">
+            <span className="text-5xl absolute left-[20] top-[-30] font-just-me-again-down-here text-[#F16A3B] z-10">
+              Summary
+            </span>
+            <div className="w-full rounded-xl bg-[#ECF3F6] relative p-8 text-base">
+              {work.summary}
+            </div>
           </div>
-        </div>
         )}
 
         {work.contents?.map((item, index) => (

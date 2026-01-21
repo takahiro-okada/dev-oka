@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { createPageMetadata } from "@/utils/createMetadata";
+
+import LinkButton from "@/components/ui/LinkButton";
+import NoteCard from "@/components/ui/NoteCard";
+import SectionTitle from "@/components/ui/SectionTitle";
 import SnsIcons from "@/components/ui/SnsIcons";
 import WorkCard from "@/components/ui/WorkCard";
-import SectionTitle from "@/components/ui/SectionTitle";
-import NoteCard from "@/components/ui/NoteCard";
-import LinkButton from "@/components/ui/LinkButton";
 import { getLatestNotes, getLatestWorks } from "@/lib/microcms";
+import { createPageMetadata } from "@/utils/createMetadata";
 import { formatDate } from "@/utils/formatDate";
 
 export const metadata = createPageMetadata("home");

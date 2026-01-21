@@ -20,6 +20,7 @@ export default function Header() {
           <Link href="/">Takahiro Okada</Link>
         </h1>
         <button
+          type="button"
           onClick={toggleMenu}
           className="px-4 py-2 bg-black rounded-md"
           aria-label="Menu"
@@ -28,9 +29,11 @@ export default function Header() {
         </button>
 
         {isOpen && (
-          <div
+          <button
+            type="button"
             className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30"
             onClick={closeMenu}
+            aria-label="Close menu overlay"
           />
         )}
 
@@ -41,6 +44,7 @@ export default function Header() {
         >
           <div className="p-6 h-full flex flex-col">
             <button
+              type="button"
               onClick={closeMenu}
               className="self-end mb-8 w-10 h-10 flex flex-col justify-center items-center gap-1.5"
               aria-label="Close menu"

@@ -1,7 +1,7 @@
-import { Geist, Geist_Mono, Just_Me_Again_Down_Here, Grape_Nuts } from "next/font/google";
+import { Just_Me_Again_Down_Here } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
+import Header from "@/components/layouts/Header";
 
 // English font
 const justMeAgainDownHere = Just_Me_Again_Down_Here({

@@ -5,9 +5,9 @@ type WorkTagProps = {
 export default function WorkTag(work: WorkTagProps) {
   return (
     <div className="flex gap-1.5">
-      {work.techs?.map((tech, index) => (
+      {work.techs?.map((tech) => (
         <span
-          key={index}
+          key={tech}
           className="bg-[#ECF3F6] px-2.5 py-1 rounded-md text-xs"
         >
           {tech}
