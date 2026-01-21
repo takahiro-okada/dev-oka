@@ -1,6 +1,7 @@
-import { formatDate } from "@/utils/formatDate";
 import Image from "next/image";
 import Link from "next/link";
+
+import { formatDate } from "@/utils/formatDate";
 
 type NoteCardProps = {
   href: string;

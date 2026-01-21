@@ -1,7 +1,6 @@
-import { createPageMetadata } from "@/utils/createMetadata";
-import SectionTitle from "@/components/ui/SectionTitle";
 import NoteCard from "@/components/ui/NoteCard";
 import { getNoteList } from "@/lib/microcms";
+import { createPageMetadata } from "@/utils/createMetadata";
 
 export const metadata = createPageMetadata("notes");
 

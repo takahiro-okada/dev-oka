@@ -1,5 +1,5 @@
-import { createArticleMetadata } from "@/utils/createMetadata";
 import { getNote } from "@/lib/microcms";
+import { createArticleMetadata } from "@/utils/createMetadata";
 import { formatDate } from "@/utils/formatDate";
 
 interface NotesPageProps {
@@ -8,7 +8,7 @@ interface NotesPageProps {
   }>;
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }: NotesPageProps) {
   const { slug } = await params;
   const note = await getNote(slug);
 

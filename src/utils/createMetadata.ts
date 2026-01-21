@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 const siteConfig = {
   name: "Takahiro Okada",
@@ -11,7 +11,7 @@ export function createMetadata(
   title: string,
   description?: string,
   image?: string,
-  additionalOG?: Record<string, any>,
+  additionalOG?: Record<string, string | number | boolean>,
 ): Metadata {
   const fullTitle = title.includes("|")
     ? title

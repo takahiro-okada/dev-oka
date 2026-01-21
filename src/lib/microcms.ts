@@ -1,9 +1,10 @@
-import { createClient } from "microcms-js-sdk";
 import type {
-  MicroCMSQueries,
   MicroCMSImage,
   MicroCMSListContent,
+  MicroCMSQueries,
 } from "microcms-js-sdk";
+
+import { createClient } from "microcms-js-sdk";
 
 export type Note = {
   id: string;
