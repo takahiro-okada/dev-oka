@@ -14,7 +14,7 @@
   --font-mono: var(--font-geist-mono);
   --font-just-me-again-down-here: var(--font-en);
 
-  /* Design Tokens */
+  /* Design tokens */
 }
 
 body {
@@ -23,7 +23,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Articel */
+/* Article */
 .article-content {
   @apply text-gray-800 leading-relaxed;
 }

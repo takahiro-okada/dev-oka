@@ -6,6 +6,13 @@ import type {
 
 import { createClient } from "microcms-js-sdk";
 
+const ENDPOINTS = {
+  notes: "notes",
+  works: "work",
+} as const;
+
+const LATEST_LIMIT = 3;
+
 export type Note = {
   id: string;
   title: string;
@@ -51,56 +58,46 @@ export const client = createClient({
   apiKey: process.env.MICROCMS_API_KEY,
 });
 
-export const getNoteList = async (queries?: MicroCMSQueries) => {
-  const listData = await client.getList<Note>({
-    endpoint: "notes",
+const getList = <T extends MicroCMSListContent>(
+  endpoint: (typeof ENDPOINTS)[keyof typeof ENDPOINTS],
+  queries?: MicroCMSQueries,
+) =>
+  client.getList<T>({
+    endpoint,
     queries,
   });
-  return listData;
-};
 
-export const getNote = async (slug: string) => {
-  const note = await client.getListDetail<Note>({
-    endpoint: "notes",
-    contentId: slug,
+const getDetail = <T extends MicroCMSListContent>(
+  endpoint: (typeof ENDPOINTS)[keyof typeof ENDPOINTS],
+  contentId: string,
+) =>
+  client.getListDetail<T>({
+    endpoint,
+    contentId,
   });
-  return note;
-};
+
+export const getNoteList = (queries?: MicroCMSQueries) =>
+  getList<Note>(ENDPOINTS.notes, queries);
+
+export const getNote = (slug: string) => getDetail<Note>(ENDPOINTS.notes, slug);
 
 export const getLatestNotes = async () => {
-  const notes = await client.getList<Note>({
-    endpoint: "notes",
-    queries: {
-      limit: 3,
-      orders: "-publishedAt",
-    },
+  const notes = await getNoteList({
+    limit: LATEST_LIMIT,
+    orders: "-publishedAt",
   });
   return notes.contents;
 };
 
-export const getWorkList = async (queries?: MicroCMSQueries) => {
-  const listData = await client.getList<Work>({
-    endpoint: "work",
-    queries,
-  });
-  return listData;
-};
+export const getWorkList = (queries?: MicroCMSQueries) =>
+  getList<Work>(ENDPOINTS.works, queries);
 
 export const getLatestWorks = async () => {
-  const works = await client.getList<Work>({
-    endpoint: "work",
-    queries: {
-      limit: 3,
-      orders: "-publishedAt",
-    },
+  const works = await getWorkList({
+    limit: LATEST_LIMIT,
+    orders: "-publishedAt",
   });
   return works.contents;
 };
 
-export const getWork = async (slug: string) => {
-  const work = await client.getListDetail<Work>({
-    endpoint: "work",
-    contentId: slug,
-  });
-  return work;
-};
+export const getWork = (slug: string) => getDetail<Work>(ENDPOINTS.works, slug);
