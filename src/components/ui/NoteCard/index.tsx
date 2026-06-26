@@ -9,6 +9,7 @@ type NoteCardProps = {
   alt: string;
   title: string;
   date?: string;
+  transitionId?: string;
 };
 
 export default function NoteCard({
@@ -17,7 +18,12 @@ export default function NoteCard({
   alt,
   title,
   date,
+  transitionId,
 }: NoteCardProps) {
+  const titleTransitionName = transitionId
+    ? `note-title-${transitionId}`
+    : undefined;
+
   return (
     <li>
       <Link
@@ -36,7 +42,12 @@ export default function NoteCard({
           <div className="w-[100px] h-[100px] bg-[#ecf3f6] rounded-3xl" />
         )}
         <div>
-          <h3 className="text-lg font-bold">{title}</h3>
+          <h3
+            className="text-lg font-bold"
+            style={{ viewTransitionName: titleTransitionName }}
+          >
+            {title}
+          </h3>
           {date && (
             <time className="text-sm text-gray-500">{formatDate(date)}</time>
           )}

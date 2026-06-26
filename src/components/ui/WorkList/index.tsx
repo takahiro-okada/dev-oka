@@ -16,6 +16,7 @@ export default function WorkList({ works }: WorkListProps) {
           alt={work.title}
           title={work.title}
           techs={work.techs}
+          transitionId={work.id}
         />
       ))}
     </ul>
