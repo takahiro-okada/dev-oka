@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { getLatestWorks } from "@/lib/microcms";
-import WorkCard from "@/components/ui/WorkCard";
 import LinkButton from "@/components/ui/LinkButton";
+import WorkCard from "@/components/ui/WorkCard";
+import { getLatestWorks } from "@/lib/microcms";
 
 export default async function AboutPage() {
   const works = await getLatestWorks();
@@ -83,22 +83,22 @@ export default async function AboutPage() {
       <div className="mt-8">
         <h2 className="text-4xl font-semibold">Personal Project</h2>
 
-          <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {works.map((work) => (
-              <WorkCard
-                key={work.id}
-                href={`/works/${work.id}`}
-                imageSrc={work.thumbnail?.url || "/images/default.jpeg"}
-                alt={work.title}
-                title={work.title}
-                techs={work.techs}
-              />
-            ))}
-          </ul>
+        <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {works.map((work) => (
+            <WorkCard
+              key={work.id}
+              href={`/works/${work.id}`}
+              imageSrc={work.thumbnail?.url || "/images/default.jpeg"}
+              alt={work.title}
+              title={work.title}
+              techs={work.techs}
+            />
+          ))}
+        </ul>
 
-          <div className="mt-12 text-center">
-            <LinkButton href="/works/">READ MORE</LinkButton>
-          </div>
+        <div className="mt-12 text-center">
+          <LinkButton href="/works/">READ MORE</LinkButton>
+        </div>
       </div>
 
       {/* Work Experience */}
