@@ -9,6 +9,7 @@ type Props = {
   href?: string;
   imageSrc?: string;
   alt?: string;
+  transitionId?: string;
 };
 
 export default function WorkCard({
@@ -17,7 +18,15 @@ export default function WorkCard({
   href = "#",
   imageSrc = "/images/sample.jpg",
   alt = "Work",
+  transitionId,
 }: Props) {
+  const imageTransitionName = transitionId
+    ? `work-image-${transitionId}`
+    : undefined;
+  const titleTransitionName = transitionId
+    ? `work-title-${transitionId}`
+    : undefined;
+
   return (
     <li className="relative">
       <h2 className="absolute right-[-20] top-[-10] text-2xl font-just-me-again-down-here rotate-20 text-[#F16A3B] font-bold">
@@ -30,12 +39,18 @@ export default function WorkCard({
             alt={alt}
             width={307}
             height={230}
+            style={{ viewTransitionName: imageTransitionName }}
             className="rounded-lg w-full object-cover aspect-[232/154]"
           />
         </div>
         <div className="">
           <div className="flex items-center gap-1 mt-2">
-            <h3 className="font-bold">{title}</h3>
+            <h3
+              className="font-bold"
+              style={{ viewTransitionName: titleTransitionName }}
+            >
+              {title}
+            </h3>
           </div>
           <div className="flex gap-1.5 mt-2.5">
             <WorkTag techs={techs} />

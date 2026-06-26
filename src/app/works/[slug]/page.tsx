@@ -125,13 +125,17 @@ export default async function WorkPage({ params }: WorkPageProps) {
               alt={work.title}
               width={work.thumbnail.width}
               height={work.thumbnail.height}
+              style={{ viewTransitionName: `work-image-${work.id}` }}
               className="w-full h-auto rounded-lg"
             />
           </div>
         )}
 
         <div className="pt-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4 leading-tight">
+          <h1
+            className="text-4xl font-bold text-gray-900 mb-4 leading-tight"
+            style={{ viewTransitionName: `work-title-${work.id}` }}
+          >
             {work.title}
           </h1>
           <WorkLinks work={work} />
