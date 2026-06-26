@@ -83,8 +83,8 @@ export default async function WorkPage({ params }: WorkPageProps) {
           </div>
         )}
 
-        {work.contents?.map((item, index) => (
-          <div key={index} className="mt-12">
+        {work.contents?.map((item) => (
+          <div key={`${item.fieldId}-${item.contentTitle}`} className="mt-12">
             <h2 className="font-extrabold text-2xl">{item.contentTitle}</h2>
 
             <div className="mt-4">
