@@ -30,7 +30,7 @@ export default function NoteCard({
             alt={alt}
             width={100}
             height={100}
-            className="w-rounded-lg bg-[#ecf3f6] object-cover rounded-3xl aspect-square"
+            className="bg-[#ecf3f6] object-cover rounded-3xl aspect-square"
           />
         ) : (
           <div className="w-[100px] h-[100px] bg-[#ecf3f6] rounded-3xl" />

@@ -1,13 +1,12 @@
 import Image from "next/image";
 
 import LinkButton from "@/components/ui/LinkButton";
-import NoteCard from "@/components/ui/NoteCard";
+import NoteList from "@/components/ui/NoteList";
 import SectionTitle from "@/components/ui/SectionTitle";
 import SnsIcons from "@/components/ui/SnsIcons";
-import WorkCard from "@/components/ui/WorkCard";
+import WorkList from "@/components/ui/WorkList";
 import { getLatestNotes, getLatestWorks } from "@/lib/microcms";
 import { createPageMetadata } from "@/utils/createMetadata";
-import { formatDate } from "@/utils/formatDate";
 
 export const metadata = createPageMetadata("home");
 
@@ -61,18 +60,7 @@ export default async function Home() {
           <SectionTitle>My Works</SectionTitle>
         </div>
         <div className="max-w-(--content-width) mx-auto px-5">
-          <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {works.map((work) => (
-              <WorkCard
-                key={work.id}
-                href={`/works/${work.id}`}
-                imageSrc={work.thumbnail?.url || "/images/default.jpeg"}
-                alt={work.title}
-                title={work.title}
-                techs={work.techs}
-              />
-            ))}
-          </ul>
+          <WorkList works={works} />
 
           <div className="mt-12 text-center">
             <LinkButton href="/works/">READ MORE</LinkButton>
@@ -85,18 +73,7 @@ export default async function Home() {
         <div className="max-w-(--content-width) mx-auto px-5">
           <SectionTitle>My Notes</SectionTitle>
 
-          <ul className="grid gap-2.5 mt-8">
-            {notes.map((note) => (
-              <NoteCard
-                key={note.id}
-                href={`/notes/${note.id}`}
-                imageSrc={note.thumbnail?.url || "/images/default.jpeg"}
-                alt={note.title}
-                title={note.title}
-                date={formatDate(note.publishedAt)}
-              />
-            ))}
-          </ul>
+          <NoteList notes={notes} />
 
           <div className="mt-12 text-center">
             <LinkButton href="/notes">READ MORE</LinkButton>
