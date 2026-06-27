@@ -25,13 +25,14 @@ export default async function Home() {
                 alt="Takahiro Okada"
                 width={307}
                 height={230}
+                priority
                 className="rounded-lg w-full object-cover"
               />
               <div className="mt-4">
                 <SnsIcons />
               </div>
             </div>
-            <div datatype="mv-text" className="mt-8 md:mt-0">
+            <div datatype="mv-text" className="mt-8 leading-7 md:mt-0">
               <p>
                 I'm <strong>Takahiro Okada</strong>, a Web Engineer based in
                 Japan.

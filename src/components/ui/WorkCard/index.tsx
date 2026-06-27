@@ -9,7 +9,6 @@ type Props = {
   href?: string;
   imageSrc?: string;
   alt?: string;
-  transitionId?: string;
 };
 
 export default function WorkCard({
@@ -18,39 +17,28 @@ export default function WorkCard({
   href = "#",
   imageSrc = "/images/sample.jpg",
   alt = "Work",
-  transitionId,
 }: Props) {
-  const imageTransitionName = transitionId
-    ? `work-image-${transitionId}`
-    : undefined;
-  const titleTransitionName = transitionId
-    ? `work-title-${transitionId}`
-    : undefined;
-
   return (
-    <li className="relative">
-      <h2 className="absolute right-[-20] top-[-10] text-2xl font-just-me-again-down-here rotate-20 text-[#F16A3B] font-bold">
+    <li className="relative group">
+      <h2 className="absolute right-[-14px] top-[-12px] z-10 text-2xl font-just-me-again-down-here rotate-12 text-[#F16A3B] font-bold transition-transform group-hover:rotate-6">
         Click Me
       </h2>
-      <Link href={href} className="">
-        <div className="">
+      <Link
+        href={href}
+        className="block rounded-lg outline-none transition-transform duration-200 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-[#F16A3B] focus-visible:ring-offset-4"
+      >
+        <div className="overflow-hidden rounded-lg bg-[#ECF3F6]">
           <Image
             src={imageSrc}
             alt={alt}
             width={307}
             height={230}
-            style={{ viewTransitionName: imageTransitionName }}
-            className="rounded-lg w-full object-cover aspect-[232/154]"
+            className="w-full object-cover aspect-[232/154] transition-transform duration-300 group-hover:scale-105"
           />
         </div>
-        <div className="">
+        <div>
           <div className="flex items-center gap-1 mt-2">
-            <h3
-              className="font-bold"
-              style={{ viewTransitionName: titleTransitionName }}
-            >
-              {title}
-            </h3>
+            <h3 className="font-bold leading-snug">{title}</h3>
           </div>
           <div className="flex gap-1.5 mt-2.5">
             <WorkTag techs={techs} />

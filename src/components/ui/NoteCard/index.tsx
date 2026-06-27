@@ -9,7 +9,6 @@ type NoteCardProps = {
   alt: string;
   title: string;
   date?: string;
-  transitionId?: string;
 };
 
 export default function NoteCard({
@@ -18,38 +17,34 @@ export default function NoteCard({
   alt,
   title,
   date,
-  transitionId,
 }: NoteCardProps) {
-  const titleTransitionName = transitionId
-    ? `note-title-${transitionId}`
-    : undefined;
-
   return (
     <li>
       <Link
         href={href}
-        className="flex items-center md:gap-8 gap-6 py-2 rounded-lg"
+        className="group flex items-center gap-5 rounded-lg border border-transparent px-3 py-3 transition-colors hover:border-[#ECF3F6] hover:bg-[#f7fafc] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F16A3B] focus-visible:ring-offset-4 md:gap-7"
       >
         {imageSrc ? (
-          <Image
-            src={imageSrc}
-            alt={alt}
-            width={100}
-            height={100}
-            className="bg-[#ecf3f6] object-cover rounded-3xl aspect-square"
-          />
+          <div className="shrink-0 overflow-hidden rounded-2xl bg-[#ecf3f6]">
+            <Image
+              src={imageSrc}
+              alt={alt}
+              width={88}
+              height={88}
+              className="h-22 w-22 object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
         ) : (
-          <div className="w-[100px] h-[100px] bg-[#ecf3f6] rounded-3xl" />
+          <div className="h-22 w-22 shrink-0 rounded-2xl bg-[#ecf3f6]" />
         )}
-        <div>
-          <h3
-            className="text-lg font-bold"
-            style={{ viewTransitionName: titleTransitionName }}
-          >
+        <div className="min-w-0">
+          <h3 className="text-lg font-bold leading-snug group-hover:text-[#F16A3B]">
             {title}
           </h3>
           {date && (
-            <time className="text-sm text-gray-500">{formatDate(date)}</time>
+            <time className="mt-1 block text-sm text-gray-500">
+              {formatDate(date)}
+            </time>
           )}
         </div>
       </Link>

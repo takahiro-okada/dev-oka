@@ -28,10 +28,7 @@ export default async function NotesPage({ params }: NotesPageProps) {
   return (
     <article className="max-w-(--content-width) mx-auto ">
       <div className="px-5 pt-12">
-        <h1
-          className="text-4xl font-bold text-gray-900 mb-4 leading-tight"
-          style={{ viewTransitionName: `note-title-${note.id}` }}
-        >
+        <h1 className="text-4xl font-bold text-gray-900 mb-4 leading-tight">
           {note.title}
         </h1>
         <time className="text-gray-500 text-sm">
