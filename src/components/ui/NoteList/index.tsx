@@ -16,7 +16,6 @@ export default function NoteList({ notes }: NoteListProps) {
           alt={note.title}
           title={note.title}
           date={note.publishedAt}
-          transitionId={note.id}
         />
       ))}
     </ul>
