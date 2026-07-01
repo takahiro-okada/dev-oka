@@ -1,18 +1,24 @@
 import Image from "next/image";
 
+import ActivityLog from "@/components/ui/ActivityLog";
 import LinkButton from "@/components/ui/LinkButton";
 import NoteList from "@/components/ui/NoteList";
 import SectionTitle from "@/components/ui/SectionTitle";
 import SnsIcons from "@/components/ui/SnsIcons";
 import WorkList from "@/components/ui/WorkList";
+import { getActivityLog } from "@/lib/activityLog";
 import { getLatestNotes, getLatestWorks } from "@/lib/microcms";
 import { createPageMetadata } from "@/utils/createMetadata";
 
 export const metadata = createPageMetadata("home");
+export const revalidate = 21600;
 
 export default async function Home() {
-  const notes = await getLatestNotes();
-  const works = await getLatestWorks();
+  const [notes, works, activityLog] = await Promise.all([
+    getLatestNotes(),
+    getLatestWorks(),
+    getActivityLog(),
+  ]);
 
   return (
     <>
@@ -66,6 +72,16 @@ export default async function Home() {
           <div className="mt-12 text-center">
             <LinkButton href="/works/">READ MORE</LinkButton>
           </div>
+        </div>
+      </section>
+
+      {/* Activity Log */}
+      <section className="mt-16">
+        <div className="max-w-(--content-width) mx-auto px-5">
+          <ActivityLog
+            monthlyActivities={activityLog.monthlyActivities}
+            periodLabel={activityLog.periodLabel}
+          />
         </div>
       </section>
 
