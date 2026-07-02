@@ -84,20 +84,14 @@ const SourceIcon = ({
 
   if (source === "youtube") {
     return (
-      <span
-        aria-label="YouTube"
-        className={`${baseClassName} bg-[#ff0033]`}
-        role="img"
-        style={style}
-      >
-        <svg
-          aria-hidden="true"
-          width={Math.round(size * 0.68)}
-          height={Math.round(size * 0.68)}
-          viewBox="0 0 24 24"
-        >
-          <path d="M9.5 8.5v7l6-3.5-6-3.5Z" fill="white" />
-        </svg>
+      <span className={baseClassName} style={style}>
+        <Image
+          src="/images/icon-youtube-red.png"
+          alt="YouTube"
+          width={size}
+          height={size}
+          className="scale-125"
+        />
       </span>
     );
   }
@@ -116,13 +110,13 @@ const SourceIcon = ({
   }
 
   return (
-    <span
-      aria-label="note"
-      className={`${baseClassName} bg-[#41c9b4] font-bold text-white`}
-      role="img"
-      style={{ ...style, fontSize: size * 0.58 }}
-    >
-      n
+    <span className={baseClassName} style={style}>
+      <Image
+        src="/images/icon-note.png"
+        alt="note"
+        width={size}
+        height={size}
+      />
     </span>
   );
 };
