@@ -25,6 +25,11 @@ const toPinPosition = (latitude: number, longitude: number) => ({
   top: `${((90 - latitude) / 180) * 100}%`,
 });
 
+const MAP_VERTICAL_LINES = [
+  0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
+];
+const MAP_HORIZONTAL_LINES = [0, 100, 200, 300, 400, 500];
+
 export default function TravelExplorer({ logs }: TravelExplorerProps) {
   const [selectedId, setSelectedId] = useState<string>("all");
   const selectedLog = logs.find((log) => log.id === selectedId);
@@ -45,10 +50,32 @@ export default function TravelExplorer({ logs }: TravelExplorerProps) {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px]">
       <div>
-        <div className="relative aspect-[16/9] overflow-hidden rounded-lg border border-gray-200 bg-[#edf3f5]">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.08)_1px,transparent_1px)] bg-[size:12.5%_25%]" />
-          <div className="absolute inset-x-[14%] top-[24%] h-[52%] rounded-[50%] border border-gray-300 bg-white/55" />
-          <div className="absolute inset-x-[24%] top-[34%] h-[34%] rounded-[50%] border border-gray-300" />
+        <div className="relative aspect-[2/1] overflow-hidden rounded-lg border border-gray-200 bg-[#dcecf2]">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 1000 500"
+            className="absolute inset-0 h-full w-full"
+          >
+            <rect width="1000" height="500" fill="#dcecf2" />
+            <g stroke="#c2d3dc" strokeWidth="1">
+              {MAP_VERTICAL_LINES.map((x) => (
+                <line key={`vertical-${x}`} x1={x} y1="0" x2={x} y2="500" />
+              ))}
+              {MAP_HORIZONTAL_LINES.map((y) => (
+                <line key={`horizontal-${y}`} x1="0" y1={y} x2="1000" y2={y} />
+              ))}
+            </g>
+            <g fill="#f7fbf9" stroke="#b9c9c5" strokeWidth="2">
+              <path d="M116 120L170 82L248 92L303 135L280 198L226 219L189 252L129 232L92 181Z" />
+              <path d="M248 225L304 251L327 316L306 392L254 451L224 387L199 322L214 268Z" />
+              <path d="M455 105L541 86L648 109L721 151L688 207L601 212L531 194L463 173Z" />
+              <path d="M500 211L586 224L620 291L594 372L536 407L491 348L472 282Z" />
+              <path d="M664 190L736 159L827 189L891 243L850 305L774 284L706 242Z" />
+              <path d="M777 325L828 310L873 348L858 400L807 395Z" />
+              <path d="M885 360L928 377L944 429L907 444L876 407Z" />
+              <path d="M21 382L86 370L131 397L114 430L42 425Z" />
+            </g>
+          </svg>
           {logsWithCoordinates.map((log) => {
             const isSelected = selectedId === log.id;
 
