@@ -56,7 +56,7 @@ export function createMetadata(
 
 // ページタイプ別のメタデータ生成
 export function createPageMetadata(
-  page: "activity" | "home" | "notes" | "works",
+  page: "activity" | "home" | "notes" | "travel" | "works",
 ) {
   const configs = {
     activity: {
@@ -73,6 +73,11 @@ export function createPageMetadata(
       title: "Notes | Takahiro Okada",
       description:
         "Articles about web development, Next.js, TypeScript, and modern technologies. Technical insights and best practices for building web applications.",
+    },
+    travel: {
+      title: "Travel | Takahiro Okada",
+      description:
+        "Travel logs from places Takahiro Okada has visited, organized by date, location, and photos.",
     },
     works: {
       title: "Works | Takahiro Okada",
