@@ -55,8 +55,15 @@ export function createMetadata(
 }
 
 // ページタイプ別のメタデータ生成
-export function createPageMetadata(page: "home" | "notes" | "works") {
+export function createPageMetadata(
+  page: "activity" | "home" | "notes" | "works",
+) {
   const configs = {
+    activity: {
+      title: "Activity | Takahiro Okada",
+      description:
+        "Activity log for Takahiro Okada across GitHub, note, okalog, and YouTube.",
+    },
     home: {
       title: "Takahiro Okada | Full Stack Developer & Web Designer",
       description:

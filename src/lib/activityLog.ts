@@ -5,6 +5,15 @@ export type MonthlyActivity = {
   values: Record<ActivitySourceKey, number>;
 };
 
+export type ActivityTimelineEntry = {
+  date: string;
+  description?: string;
+  href?: string;
+  id: string;
+  source: ActivitySourceKey;
+  title: string;
+};
+
 type ActivityPeriod = {
   endExclusive: Date;
   label: string;
@@ -19,11 +28,13 @@ type ActivityPeriod = {
 type GitHubSearchResponse = {
   items?: Array<{
     created_at?: string;
+    html_url?: string;
     pull_request?: {
       merged_at?: string | null;
     };
     repository_url?: string;
     state?: string;
+    title?: string;
   }>;
 };
 
@@ -48,11 +59,14 @@ type GitHubContributionsResponse = {
 type GitHubRepository = {
   created_at?: string;
   full_name?: string;
+  html_url?: string;
 };
 
 type NoteContentsResponse = {
   data?: {
     contents?: Array<{
+      name?: string;
+      noteUrl?: string;
       publishAt?: string;
     }>;
     isLastPage?: boolean;
@@ -61,6 +75,10 @@ type NoteContentsResponse = {
 
 type WordPressPost = {
   date?: string;
+  link?: string;
+  title?: {
+    rendered?: string;
+  };
 };
 
 type YouTubeChannelsResponse = {
@@ -76,10 +94,12 @@ type YouTubeChannelsResponse = {
 type YouTubePlaylistItemsResponse = {
   items?: Array<{
     contentDetails?: {
+      videoId?: string;
       videoPublishedAt?: string;
     };
     snippet?: {
       publishedAt?: string;
+      title?: string;
     };
   }>;
   nextPageToken?: string;
@@ -162,6 +182,20 @@ const getMonthKeyFromDateString = (dateString?: string) => {
   return toMonthKey(date);
 };
 
+const isInPeriod = (dateString: string | undefined, period: ActivityPeriod) => {
+  if (!dateString) {
+    return false;
+  }
+
+  const date = new Date(dateString);
+
+  return (
+    !Number.isNaN(date.getTime()) &&
+    date >= period.start &&
+    date < period.endExclusive
+  );
+};
+
 const isBeforePeriod = (
   dateString: string | undefined,
   period: ActivityPeriod,
@@ -193,6 +227,24 @@ const addCount = (
   }
 };
 
+const addTimelineEntry = (
+  timelineEntries: ActivityTimelineEntry[],
+  period: ActivityPeriod,
+  entry: ActivityTimelineEntry,
+) => {
+  if (isInPeriod(entry.date, period)) {
+    timelineEntries.push(entry);
+  }
+};
+
+const stripHtml = (value: string | undefined) =>
+  value
+    ?.replace(/<[^>]*>/g, "")
+    .replace(/&#8211;/g, "-")
+    .replace(/&#8217;/g, "'")
+    .replace(/&amp;/g, "&")
+    .trim();
+
 const fetchJson = async <T>(url: string, init?: RequestInit): Promise<T> => {
   const response = await fetch(url, {
     ...init,
@@ -209,6 +261,7 @@ const fetchJson = async <T>(url: string, init?: RequestInit): Promise<T> => {
 const fetchGitHubCounts = async (
   period: ActivityPeriod,
   monthlyActivities: MonthlyActivity[],
+  timelineEntries: ActivityTimelineEntry[],
 ) => {
   const username = process.env.ACTIVITY_GITHUB_USERNAME;
   const token = process.env.ACTIVITY_GITHUB_TOKEN;
@@ -267,6 +320,7 @@ const fetchGitHubCounts = async (
   for (const repositoryName of await fetchGitHubPullRequestCounts({
     period,
     monthlyActivities,
+    timelineEntries,
     token,
     username,
   })) {
@@ -279,6 +333,14 @@ const fetchGitHubCounts = async (
       activityRepositoryNames.has(repository.full_name)
     ) {
       addCount(monthlyActivities, "github", repository.created_at);
+      addTimelineEntry(timelineEntries, period, {
+        date: repository.created_at ?? "",
+        description: repository.full_name,
+        href: repository.html_url,
+        id: `github-repo-${repository.full_name}`,
+        source: "github",
+        title: "Repository created",
+      });
     }
   }
 };
@@ -315,11 +377,13 @@ const fetchGitHubRepositories = async (username: string, token: string) => {
 const fetchGitHubPullRequestCounts = async ({
   period,
   monthlyActivities,
+  timelineEntries,
   token,
   username,
 }: {
   period: ActivityPeriod;
   monthlyActivities: MonthlyActivity[];
+  timelineEntries: ActivityTimelineEntry[];
   token: string;
   username: string;
 }) => {
@@ -351,7 +415,17 @@ const fetchGitHubPullRequestCounts = async ({
         addCount(monthlyActivities, "github", item.created_at);
 
         if (item.repository_url) {
-          repositoryNames.add(item.repository_url.split("/repos/")[1]);
+          const repositoryName = item.repository_url.split("/repos/")[1];
+
+          repositoryNames.add(repositoryName);
+          addTimelineEntry(timelineEntries, period, {
+            date: item.created_at ?? "",
+            description: `${repositoryName}${item.title ? ` - ${item.title}` : ""}`,
+            href: item.html_url,
+            id: `github-pr-${item.html_url ?? item.created_at}`,
+            source: "github",
+            title: "Pull request created",
+          });
         }
       }
     }
@@ -367,6 +441,7 @@ const fetchGitHubPullRequestCounts = async ({
 const fetchNoteCounts = async (
   period: ActivityPeriod,
   monthlyActivities: MonthlyActivity[],
+  timelineEntries: ActivityTimelineEntry[],
 ) => {
   const username = process.env.ACTIVITY_NOTE_USERNAME;
 
@@ -384,6 +459,14 @@ const fetchNoteCounts = async (
 
     for (const content of contents) {
       addCount(monthlyActivities, "note", content.publishAt);
+      addTimelineEntry(timelineEntries, period, {
+        date: content.publishAt ?? "",
+        description: "note",
+        href: content.noteUrl,
+        id: `note-${content.noteUrl ?? content.publishAt}`,
+        source: "note",
+        title: content.name ?? "note article",
+      });
     }
 
     if (
@@ -398,6 +481,7 @@ const fetchNoteCounts = async (
 const fetchOkaLogCounts = async (
   period: ActivityPeriod,
   monthlyActivities: MonthlyActivity[],
+  timelineEntries: ActivityTimelineEntry[],
 ) => {
   const baseUrl = process.env.ACTIVITY_OKALOG_BASE_URL;
 
@@ -411,7 +495,7 @@ const fetchOkaLogCounts = async (
   url.searchParams.set("orderby", "date");
   url.searchParams.set("order", "desc");
   url.searchParams.set("per_page", "100");
-  url.searchParams.set("_fields", "date");
+  url.searchParams.set("_fields", "date,link,title");
 
   for (let page = 1; page <= 10; page += 1) {
     url.searchParams.set("page", String(page));
@@ -420,6 +504,14 @@ const fetchOkaLogCounts = async (
 
     for (const post of posts) {
       addCount(monthlyActivities, "okalog", post.date);
+      addTimelineEntry(timelineEntries, period, {
+        date: post.date ?? "",
+        description: "okalog",
+        href: post.link,
+        id: `okalog-${post.link ?? post.date}`,
+        source: "okalog",
+        title: stripHtml(post.title?.rendered) ?? "okalog post",
+      });
     }
 
     if (posts.length < 100) {
@@ -431,6 +523,7 @@ const fetchOkaLogCounts = async (
 const fetchYouTubeCounts = async (
   period: ActivityPeriod,
   monthlyActivities: MonthlyActivity[],
+  timelineEntries: ActivityTimelineEntry[],
 ) => {
   const apiKey = process.env.ACTIVITY_YOUTUBE_API_KEY;
   const handle = process.env.ACTIVITY_YOUTUBE_HANDLE;
@@ -475,11 +568,20 @@ const fetchYouTubeCounts = async (
     const items = playlistJson.items ?? [];
 
     for (const item of items) {
-      addCount(
-        monthlyActivities,
-        "youtube",
-        item.contentDetails?.videoPublishedAt ?? item.snippet?.publishedAt,
-      );
+      const date =
+        item.contentDetails?.videoPublishedAt ?? item.snippet?.publishedAt;
+
+      addCount(monthlyActivities, "youtube", date);
+      addTimelineEntry(timelineEntries, period, {
+        date: date ?? "",
+        description: "YouTube",
+        href: item.contentDetails?.videoId
+          ? `https://www.youtube.com/watch?v=${item.contentDetails.videoId}`
+          : undefined,
+        id: `youtube-${item.contentDetails?.videoId ?? date}`,
+        source: "youtube",
+        title: item.snippet?.title ?? "YouTube video",
+      });
     }
 
     if (
@@ -504,12 +606,13 @@ export const getActivityLog = async () => {
     month: month.key,
     values: createEmptyValues(),
   }));
+  const timelineEntries: ActivityTimelineEntry[] = [];
 
   await Promise.allSettled([
-    fetchGitHubCounts(period, monthlyActivities),
-    fetchNoteCounts(period, monthlyActivities),
-    fetchOkaLogCounts(period, monthlyActivities),
-    fetchYouTubeCounts(period, monthlyActivities),
+    fetchGitHubCounts(period, monthlyActivities, timelineEntries),
+    fetchNoteCounts(period, monthlyActivities, timelineEntries),
+    fetchOkaLogCounts(period, monthlyActivities, timelineEntries),
+    fetchYouTubeCounts(period, monthlyActivities, timelineEntries),
   ]);
 
   return {
@@ -519,5 +622,8 @@ export const getActivityLog = async () => {
     })),
     periodLabel: period.label,
     sources: SOURCE_KEYS,
+    timelineEntries: timelineEntries.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ),
   };
 };
