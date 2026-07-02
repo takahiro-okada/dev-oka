@@ -16,13 +16,7 @@ type ActivityFilterKey = ActivitySourceKey | "all";
 
 type SourceMeta = {
   className: string;
-  icon: {
-    alt: string;
-    className?: string;
-    kind: "image" | "text";
-    src?: string;
-    text?: string;
-  };
+  icon: ActivitySourceKey;
   label: string;
 };
 
@@ -30,40 +24,22 @@ const sourceStyles = {
   github: {
     label: "GitHub",
     className: "bg-gray-800 text-white",
-    icon: {
-      alt: "GitHub",
-      kind: "image",
-      src: "/images/icon-github.svg",
-    },
+    icon: "github",
   },
   note: {
     label: "note",
     className: "bg-emerald-500 text-white",
-    icon: {
-      alt: "note",
-      className: "bg-emerald-500 text-white",
-      kind: "text",
-      text: "n",
-    },
+    icon: "note",
   },
   okalog: {
     label: "okalog",
     className: "bg-amber-500 text-white",
-    icon: {
-      alt: "okalog",
-      className: "bg-amber-500 text-white",
-      kind: "text",
-      text: "o",
-    },
+    icon: "okalog",
   },
   youtube: {
     label: "YouTube",
     className: "bg-red-500 text-white",
-    icon: {
-      alt: "YouTube",
-      kind: "image",
-      src: "/images/icon-youtube.svg",
-    },
+    icon: "youtube",
   },
 } satisfies Record<ActivitySourceKey, SourceMeta>;
 
@@ -83,30 +59,70 @@ const formatTimelineDate = (dateString: string) =>
   }).format(new Date(dateString));
 
 const SourceIcon = ({
-  icon,
+  source,
   size = 24,
 }: {
-  icon: SourceMeta["icon"];
+  source: ActivitySourceKey;
   size?: number;
 }) => {
-  const className = `inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full border border-gray-200 bg-white font-bold ${icon.className ?? ""}`;
+  const baseClassName =
+    "inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full border border-gray-200 bg-white";
+  const style = { height: size, width: size };
 
-  if (icon.kind === "image" && icon.src) {
+  if (source === "github") {
     return (
-      <span className={className} style={{ height: size, width: size }}>
-        <Image src={icon.src} alt={icon.alt} width={size} height={size} />
+      <span className={baseClassName} style={style}>
+        <Image
+          src="/images/icon-github.svg"
+          alt="GitHub"
+          width={size}
+          height={size}
+        />
+      </span>
+    );
+  }
+
+  if (source === "youtube") {
+    return (
+      <span
+        aria-label="YouTube"
+        className={`${baseClassName} bg-[#ff0033]`}
+        role="img"
+        style={style}
+      >
+        <svg
+          aria-hidden="true"
+          width={Math.round(size * 0.68)}
+          height={Math.round(size * 0.68)}
+          viewBox="0 0 24 24"
+        >
+          <path d="M9.5 8.5v7l6-3.5-6-3.5Z" fill="white" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (source === "okalog") {
+    return (
+      <span className={baseClassName} style={style}>
+        <Image
+          src="/images/icon-oka.png"
+          alt="okalog"
+          width={size}
+          height={size}
+        />
       </span>
     );
   }
 
   return (
     <span
-      aria-label={icon.alt}
-      className={className}
+      aria-label="note"
+      className={`${baseClassName} bg-[#41c9b4] font-bold text-white`}
       role="img"
-      style={{ fontSize: size * 0.58, height: size, width: size }}
+      style={{ ...style, fontSize: size * 0.58 }}
     >
-      {icon.text}
+      n
     </span>
   );
 };
@@ -168,7 +184,7 @@ export default function ActivityTimeline({ entries }: ActivityTimelineProps) {
                   : "border-gray-200 bg-white text-gray-700 hover:border-gray-400"
               }`}
             >
-              {source && <SourceIcon icon={source.icon} size={20} />}
+              {source && <SourceIcon source={source.icon} size={20} />}
               <span>{option.label}</span>
               <span className={isActive ? "text-white/70" : "text-gray-400"}>
                 {count}
@@ -188,7 +204,7 @@ export default function ActivityTimeline({ entries }: ActivityTimelineProps) {
             const source = sourceStyles[entry.source];
             const title = (
               <>
-                <SourceIcon icon={source.icon} />
+                <SourceIcon source={source.icon} />
                 <span
                   className={`inline-flex shrink-0 items-center rounded px-2 py-1 text-xs font-bold ${source.className}`}
                 >
@@ -224,8 +240,20 @@ export default function ActivityTimeline({ entries }: ActivityTimelineProps) {
                   )}
                 </div>
 
+                {entry.thumbnailUrl ? (
+                  <div className="mt-3 overflow-hidden rounded border border-gray-200 bg-gray-50 md:max-w-sm">
+                    <Image
+                      src={entry.thumbnailUrl}
+                      alt=""
+                      width={384}
+                      height={216}
+                      className="aspect-video w-full object-cover"
+                    />
+                  </div>
+                ) : null}
+
                 {entry.description && (
-                  <p className="mt-2 break-words text-sm leading-6 text-gray-600">
+                  <p className="mt-3 break-words text-sm leading-6 text-gray-600">
                     {entry.description}
                   </p>
                 )}

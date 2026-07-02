@@ -11,6 +11,7 @@ export type ActivityTimelineEntry = {
   href?: string;
   id: string;
   source: ActivitySourceKey;
+  thumbnailUrl?: string;
   title: string;
 };
 
@@ -62,9 +63,12 @@ type GitHubRepository = {
   html_url?: string;
 };
 
+type NoteEyecatch = string | { url?: string } | null;
+
 type NoteContentsResponse = {
   data?: {
     contents?: Array<{
+      eyecatch?: NoteEyecatch;
       name?: string;
       noteUrl?: string;
       publishAt?: string;
@@ -74,6 +78,14 @@ type NoteContentsResponse = {
 };
 
 type WordPressPost = {
+  _embedded?: {
+    "wp:featuredmedia"?: Array<{
+      media_details?: {
+        sizes?: Record<string, { source_url?: string }>;
+      };
+      source_url?: string;
+    }>;
+  };
   date?: string;
   link?: string;
   title?: {
@@ -99,6 +111,23 @@ type YouTubePlaylistItemsResponse = {
     };
     snippet?: {
       publishedAt?: string;
+      thumbnails?: {
+        default?: {
+          url?: string;
+        };
+        high?: {
+          url?: string;
+        };
+        maxres?: {
+          url?: string;
+        };
+        medium?: {
+          url?: string;
+        };
+        standard?: {
+          url?: string;
+        };
+      };
       title?: string;
     };
   }>;
@@ -244,6 +273,36 @@ const stripHtml = (value: string | undefined) =>
     .replace(/&#8217;/g, "'")
     .replace(/&amp;/g, "&")
     .trim();
+
+const getNoteThumbnailUrl = (eyecatch: NoteEyecatch | undefined) => {
+  if (typeof eyecatch === "string") {
+    return eyecatch;
+  }
+
+  return eyecatch?.url;
+};
+
+const getWordPressThumbnailUrl = (post: WordPressPost) => {
+  const media = post._embedded?.["wp:featuredmedia"]?.[0];
+
+  return (
+    media?.media_details?.sizes?.medium_large?.source_url ??
+    media?.media_details?.sizes?.large?.source_url ??
+    media?.media_details?.sizes?.medium?.source_url ??
+    media?.source_url
+  );
+};
+
+const getYouTubeThumbnailUrl = (
+  thumbnails: NonNullable<
+    NonNullable<YouTubePlaylistItemsResponse["items"]>[number]["snippet"]
+  >["thumbnails"],
+) =>
+  thumbnails?.maxres?.url ??
+  thumbnails?.standard?.url ??
+  thumbnails?.high?.url ??
+  thumbnails?.medium?.url ??
+  thumbnails?.default?.url;
 
 const fetchJson = async <T>(url: string, init?: RequestInit): Promise<T> => {
   const response = await fetch(url, {
@@ -465,6 +524,7 @@ const fetchNoteCounts = async (
         href: content.noteUrl,
         id: `note-${content.noteUrl ?? content.publishAt}`,
         source: "note",
+        thumbnailUrl: getNoteThumbnailUrl(content.eyecatch),
         title: content.name ?? "note article",
       });
     }
@@ -495,7 +555,8 @@ const fetchOkaLogCounts = async (
   url.searchParams.set("orderby", "date");
   url.searchParams.set("order", "desc");
   url.searchParams.set("per_page", "100");
-  url.searchParams.set("_fields", "date,link,title");
+  url.searchParams.set("_embed", "wp:featuredmedia");
+  url.searchParams.set("_fields", "date,link,title,_embedded.wp:featuredmedia");
 
   for (let page = 1; page <= 10; page += 1) {
     url.searchParams.set("page", String(page));
@@ -510,6 +571,7 @@ const fetchOkaLogCounts = async (
         href: post.link,
         id: `okalog-${post.link ?? post.date}`,
         source: "okalog",
+        thumbnailUrl: getWordPressThumbnailUrl(post),
         title: stripHtml(post.title?.rendered) ?? "okalog post",
       });
     }
@@ -580,6 +642,7 @@ const fetchYouTubeCounts = async (
           : undefined,
         id: `youtube-${item.contentDetails?.videoId ?? date}`,
         source: "youtube",
+        thumbnailUrl: getYouTubeThumbnailUrl(item.snippet?.thumbnails),
         title: item.snippet?.title ?? "YouTube video",
       });
     }
