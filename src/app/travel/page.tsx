@@ -14,7 +14,10 @@ export default async function TravelPage() {
       <SectionTitle>Travel</SectionTitle>
 
       <div className="mt-8">
-        <TravelExplorer logs={travelLogs.contents} />
+        <TravelExplorer
+          logs={travelLogs.contents}
+          googleMapsApiKey={process.env.GOOGLE_MAP_API_KEY}
+        />
       </div>
     </div>
   );
