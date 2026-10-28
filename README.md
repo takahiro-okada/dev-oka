@@ -34,3 +34,28 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Dependency updates
+
+Use the pinned pnpm version with Corepack (`corepack pnpm install --frozen-lockfile`).
+Dependabot checks npm packages and GitHub Actions every Monday at 09:00
+(Pacific/Auckland). Minor and patch updates are grouped; security updates have
+a separate group. Major updates remain separate PRs for manual review.
+
+Verified Dependabot npm minor/patch PRs enable auto-merge. The main branch requires
+both the GitHub Actions `Verify` check and the Vercel preview to succeed, with the
+branch up to date. GitHub Actions updates require manual review. The auto-merge
+workflow only reads verified PR metadata and never executes PR code.
+
+`Verify` installs with a frozen lockfile, audits dependencies (high/critical issues
+fail), runs Biome, builds the application including TypeScript checks, and checks
+eight production routes including note/work detail pages. CI uses explicit mock
+CMS credentials and `scripts/ci-microcms.cjs` as a Node preload to serve fixture
+content; production CMS credentials are not needed or exposed to Dependabot.
+Vercel separately validates the build with the configured deployment environment.
+The CMS fixture is only loaded by CI and requires the dedicated placeholder
+credentials; normal development and deployment continue to use microCMS.
+
+PostCSS security overrides live in `pnpm-workspace.yaml` so Dependabot preserves
+them when regenerating the lockfile. They specify a patched minimum version
+without pinning future patch updates.
