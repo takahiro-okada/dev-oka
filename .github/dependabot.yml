@@ -16,6 +16,10 @@ updates:
         applies-to: security-updates
         patterns: ["*"]
         update-types: [minor, patch]
+    # Keep Node types aligned with the minimum runtime verified in CI.
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     commit-message:
       prefix: chore
       include: scope
