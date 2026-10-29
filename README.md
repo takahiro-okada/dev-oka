@@ -59,3 +59,8 @@ credentials; normal development and deployment continue to use microCMS.
 PostCSS security overrides live in `pnpm-workspace.yaml` so Dependabot preserves
 them when regenerating the lockfile. They specify a patched minimum version
 without pinning future patch updates.
+
+The release-age exception is limited to the already audited and deployed
+`postcss@8.5.32`. It prevents that existing transitive dependency from blocking
+unrelated Dependabot updates during its initial three-day release window;
+other packages and future PostCSS versions retain the normal waiting period.

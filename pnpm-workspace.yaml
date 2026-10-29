@@ -5,3 +5,7 @@ ignoredBuiltDependencies:
   - unrs-resolver
 overrides:
   'postcss@>=8 <8.5.23': ^8.5.23
+# Already audited and deployed; this exact transitive version must not block
+# unrelated Dependabot updates while its three-day release window elapses.
+minimumReleaseAgeExclude:
+  - postcss@8.5.32
