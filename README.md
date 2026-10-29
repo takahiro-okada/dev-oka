@@ -65,3 +65,8 @@ The release-age exceptions are limited to the already audited and deployed
 existing transitive dependencies from blocking
 unrelated Dependabot updates during its initial three-day release window;
 other packages and future PostCSS versions retain the normal waiting period.
+
+Node type definitions stay on major 22, matching the minimum runtime verified
+in CI. Dependabot updates within that major automatically; adopting a newer
+Node API requires intentionally updating the runtime and types together.
+The CI also runs the TypeScript compiler separately after generating route types.

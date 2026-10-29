@@ -41,6 +41,8 @@ jobs:
           MICROCMS_SERVICE_DOMAIN: ci-build
           MICROCMS_API_KEY: ci-placeholder
           NODE_OPTIONS: --require=${{ github.workspace }}/scripts/ci-microcms.cjs
+      - name: Standalone TypeScript check
+        run: pnpm typecheck
       - name: Smoke-test production pages
         run: node scripts/ci-smoke.mjs
         env:
