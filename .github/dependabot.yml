@@ -5,16 +5,16 @@ updates:
     schedule:
       interval: weekly
       day: monday
-      time: '09:00'
+      time: "09:00"
       timezone: Pacific/Auckland
     open-pull-requests-limit: 5
     groups:
       npm-minor-patch:
-        patterns: ['*']
+        patterns: ["*"]
         update-types: [minor, patch]
       npm-security-minor-patch:
         applies-to: security-updates
-        patterns: ['*']
+        patterns: ["*"]
         update-types: [minor, patch]
     commit-message:
       prefix: chore
@@ -25,12 +25,12 @@ updates:
     schedule:
       interval: weekly
       day: monday
-      time: '09:00'
+      time: "09:00"
       timezone: Pacific/Auckland
     open-pull-requests-limit: 3
     groups:
       actions-minor-patch:
-        patterns: ['*']
+        patterns: ["*"]
         update-types: [minor, patch]
     commit-message:
       prefix: ci
