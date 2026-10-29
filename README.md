@@ -60,7 +60,8 @@ PostCSS security overrides live in `pnpm-workspace.yaml` so Dependabot preserves
 them when regenerating the lockfile. They specify a patched minimum version
 without pinning future patch updates.
 
-The release-age exception is limited to the already audited and deployed
-`postcss@8.5.32`. It prevents that existing transitive dependency from blocking
+The release-age exceptions are limited to the already audited and deployed
+`postcss@8.5.32` and `baseline-browser-mapping@2.11.34`. They prevent these
+existing transitive dependencies from blocking
 unrelated Dependabot updates during its initial three-day release window;
 other packages and future PostCSS versions retain the normal waiting period.

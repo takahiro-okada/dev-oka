@@ -4,8 +4,9 @@ ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
 overrides:
-  'postcss@>=8 <8.5.23': ^8.5.23
-# Already audited and deployed; this exact transitive version must not block
-# unrelated Dependabot updates while its three-day release window elapses.
+  "postcss@>=8 <8.5.23": ^8.5.23
+# Already audited and deployed; these exact transitive versions must not block
+# unrelated Dependabot updates while their three-day release windows elapse.
 minimumReleaseAgeExclude:
   - postcss@8.5.32
+  - baseline-browser-mapping@2.11.34

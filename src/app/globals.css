@@ -55,7 +55,7 @@ body {
 
 .article-content ul li,
 .ballon-content ul li {
-  @apply list-disc  leading-6;
+  @apply list-disc leading-6;
 }
 
 .article-content ol,
@@ -65,11 +65,11 @@ body {
 
 .article-content ol li,
 .ballon-content ol li {
-  @apply list-decimal  leading-7;
+  @apply list-decimal leading-7;
 }
 
 .article-content blockquote {
-  @apply border-l-4 border-blue-400 pl-5 py-3 italic  bg-blue-50 my-6 rounded-r;
+  @apply border-l-4 border-blue-400 pl-5 py-3 italic bg-blue-50 my-6 rounded-r;
 }
 
 .article-content code {
