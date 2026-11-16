@@ -2,14 +2,10 @@ import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { setTimeout } from "node:timers/promises";
 
-const server = spawn(
-  process.execPath,
-  ["node_modules/next/dist/bin/next", "start", "--port", "3100"],
-  {
-    stdio: "inherit",
-    env: process.env,
-  },
-);
+const server = spawn(process.execPath, ["scripts/serve-static.mjs"], {
+  stdio: "inherit",
+  env: { ...process.env, PORT: "3100" },
+});
 const baseUrl = "http://localhost:3100";
 
 try {

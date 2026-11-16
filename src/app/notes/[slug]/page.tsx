@@ -1,4 +1,4 @@
-import { getNote } from "@/lib/microcms";
+import { client, getNote } from "@/lib/microcms";
 import { createArticleMetadata } from "@/utils/createMetadata";
 import { formatDate } from "@/utils/formatDate";
 
@@ -6,6 +6,11 @@ interface NotesPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateStaticParams() {
+  const ids = await client.getAllContentIds({ endpoint: "notes" });
+  return ids.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: NotesPageProps) {
