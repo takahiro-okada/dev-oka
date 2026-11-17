@@ -25,7 +25,10 @@ export default async function Home() {
       <section>
         <div className="max-w-(--content-width) mx-auto px-5">
           <div className="md:py-20 md:flex md:flex-row-reverse md:gap-10">
-            <div datatype="mv-image" className="md:shrink-0 rounded-lg">
+            <div
+              datatype="mv-image"
+              className="md:w-[307px] md:shrink-0 rounded-lg"
+            >
               <Image
                 src="/images/myself.jpg"
                 alt="Takahiro Okada"
