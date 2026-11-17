@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node scripts/serve-static.mjs",
     "lint": "biome check",
     "format": "biome format --write",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "deploy:cloudflare": "wrangler deploy"
   },
   "dependencies": {
     "microcms-js-sdk": "^3.6.0",
@@ -23,7 +24,8 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "tailwindcss": "^4.3.4",
-    "typescript": "^7"
+    "typescript": "^7",
+    "wrangler": "4.163.0"
   },
   "packageManager": "pnpm@10.34.9"
 }

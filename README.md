@@ -70,3 +70,11 @@ Node type definitions stay on major 22, matching the minimum runtime verified
 in CI. Dependabot updates within that major automatically; adopting a newer
 Node API requires intentionally updating the runtime and types together.
 The CI also runs the TypeScript compiler separately after generating route types.
+
+## Cloudflare deployment
+
+This site uses Next.js static export and Cloudflare Workers Static Assets. No Worker execution is needed to serve pages. Configure the existing microCMS and activity variables as build secrets in Cloudflare Builds; set `NEXT_PUBLIC_BASE_URL=https://dev-oka.com`.
+
+Run `pnpm install --frozen-lockfile`, `pnpm build`, then `pnpm deploy:cloudflare`. Use `pnpm start` to preview the exported site locally. The CI smoke test also serves this export.
+
+CMS content and activity data are captured at build time. Push to `main` or run a new Cloudflare build to refresh them; static hosting does not perform ISR. Images are served directly from their existing sources.

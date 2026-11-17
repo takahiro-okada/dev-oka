@@ -4,13 +4,18 @@ import Link from "next/link";
 import LinkButton from "@/components/ui/LinkButton";
 import WorkTag from "@/components/ui/WorkTag";
 import type { Work } from "@/lib/microcms";
-import { getWork } from "@/lib/microcms";
+import { client, getWork } from "@/lib/microcms";
 import { createArticleMetadata } from "@/utils/createMetadata";
 
 interface WorkPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateStaticParams() {
+  const ids = await client.getAllContentIds({ endpoint: "work" });
+  return ids.map((slug) => ({ slug }));
 }
 
 type WorkLink = {
