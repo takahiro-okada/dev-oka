@@ -71,7 +71,6 @@ in CI. Dependabot updates within that major automatically; adopting a newer
 Node API requires intentionally updating the runtime and types together.
 The CI also runs the TypeScript compiler separately after generating route types.
 
-
 ## Cloudflare deployment
 
 This site uses Next.js static export and Cloudflare Workers Static Assets. No Worker execution is needed to serve pages. Configure the existing microCMS and activity variables as build secrets in Cloudflare Builds; set `NEXT_PUBLIC_BASE_URL=https://dev-oka.com`.
